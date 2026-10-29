@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>История Minecraft</title>
+<style>
+  /* ============================================
+     ТЕМЫ — CSS ПЕРЕМЕННЫЕ
+     ============================================ */
+
+  /* Overworld (по умолчанию) */
+  :root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-tertiary: #222;
+    --bg-nav: rgba(30, 30, 30, 0.95);
+    --bg-footer: #111;
+
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-heading: #ffffff;
+
+    --accent: #7ed957;
+    --accent-dark: #4caf50;
+    --accent-light: #a4e876;
+
+    --border-color: #4caf50;
+    --shadow-glow: rgba(126, 217, 87, 0.3);
+    --shadow-card: rgba(0, 0, 0, 0.5);
+
+    --hero-overlay-a: rgba(0, 0, 0, 0.7);
+    --hero-overlay-b: rgba(0, 0, 0, 0.9);
+    --hero-c1: #4caf50;
+    --hero-c2: #388e3c;
+    --hero-text: #ffffff;
+    --hero-subtext: #cccccc;
+    --hero-text-shadow: 4px 4px 0 #000, 0 0 40px var(--accent);
+
+    --btn-bg: #7ed957;
+    --btn-bg-hover: #a4e876;
+    --btn-text: #1a1a1a;
+    --btn-border: #000;
+    --btn-shadow: #000;
+
+    --heading-shadow: 3px 3px 0 #000;
+    --logo-shadow: 2px 2px 0 #000;
+  }
+
+  /* Nether 🔥 */
+  [data-theme="nether"] {
+    --bg-primary: #1a0a0a;
+    --bg-secondary: #2a0f0f;
+    --bg-tertiary: #220808;
+    --bg-nav: rgba(35, 10, 5, 0.95);
+    --bg-footer: #0d0404;
+
+    --text-primary: #ffd4c4;
+    --text-secondary: #d4a58f;
+    --text-heading: #ffe4d6;
+
+    --accent: #ff6b35;
+    --accent-dark: #d84315;
+    --accent-light: #ff8a65;
+
+    --border-color: #ff5722;
+    --shadow-glow: rgba(255, 107, 53, 0.35);
+    --shadow-card: rgba(0, 0, 0, 0.7);
+
+    --hero-overlay-a: rgba(30, 0, 0, 0.75);
+    --hero-overlay-b: rgba(10, 0, 0, 0.92);
+    --hero-c1: #b71c1c;
+    --hero-c2: #7f0000;
+    --hero-text: #ffffff;
+    --hero-subtext: #ffd4c4;
+    --hero-text-shadow: 4px 4px 0 #000, 0 0 40px var(--accent);
+
+    --btn-bg: #ff6b35;
+    --btn-bg-hover: #ff8a65;
+    --btn-text: #1a0a0a;
+    --btn-border: #000;
+    --btn-shadow: #000;
+
+    --heading-shadow: 3px 3px 0 #000;
+    --logo-shadow: 2px 2px 0 #000;
+  }
+
+  /* The End 🌌 */
+  [data-theme="end"] {
+    --bg-primary: #0d0d1a;
+    --bg-secondary: #1a1a2e;
+    --bg-tertiary: #12121f;
+    --bg-nav: rgba(20, 20, 40, 0.95);
+    --bg-footer: #050510;
+
+    --text-primary: #e0d4f5;
+    --text-secondary: #a898c4;
+    --text-heading: #f0e6ff;
+
+    --accent: #c792ea;
+    --accent-dark: #9c27b0;
+    --accent-light: #e1bee7;
+
+    --border-color: #b39ddb;
+    --shadow-glow: rgba(199, 146, 234, 0.35);
+    --shadow-card: rgba(0, 0, 0, 0.7);
+
+    --hero-overlay-a: rgba(5, 0, 20, 0.75);
+    --hero-overlay-b: rgba(0, 0, 10, 0.92);
+    --hero-c1: #4a148c;
+    --hero-c2: #1a0033;
+    --hero-text: #ffffff;
+    --hero-subtext: #d4c4f0;
+    --hero-text-shadow: 4px 4px 0 #000, 0 0 40px var(--accent);
+
+    --btn-bg: #c792ea;
+    --btn-bg-hover: #e1bee7;
+    --btn-text: #1a0a2a;
+    --btn-border: #000;
+    --btn-shadow: #000;
+
+    --heading-shadow: 3px 3px 0 #000;
+    --logo-shadow: 2px 2px 0 #000;
+  }
+
+  /* Day ☀️ (светлая) */
+  [data-theme="day"] {
+    --bg-primary: #f1f8e9;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #dcedc8;
+    --bg-nav: rgba(255, 255, 255, 0.95);
+    --bg-footer: #e8f5e9;
+
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-heading: #0d3d0d;
+
+    --accent: #388e3c;
+    --accent-dark: #2e7d32;
+    --accent-light: #66bb6a;
+
+    --border-color: #4caf50;
+    --shadow-glow: rgba(76, 175, 80, 0.35);
+    --shadow-card: rgba(0, 60, 0, 0.12);
+
+    --hero-overlay-a: rgba(255, 255, 255, 0.75);
+    --hero-overlay-b: rgba(255, 255, 255, 0.9);
+    --hero-c1: #a5d6a7;
+    --hero-c2: #81c784;
+    --hero-text: #1a3d1a;
+    --hero-subtext: #2e5c2e;
+    --hero-text-shadow: 4px 4px 0 rgba(255, 255, 255, 0.7), 0 0 40px var(--accent-light);
+
+    --btn-bg: #388e3c;
+    --btn-bg-hover: #2e7d32;
+    --btn-text: #ffffff;
+    --btn-border: #1b5e20;
+    --btn-shadow: #1b5e20;
+
+    --heading-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    --logo-shadow: 2px 2px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  /* ============================================
+     БАЗОВЫЕ СТИЛИ
+     ============================================ */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Плавные переходы при смене темы */
+  nav, footer, .event-content, .card, .fact, .section h2,
+  .fact-number, .theme-btn, .theme-menu, .btn, .hero h1,
+  .hero p, .timeline::before, .event::after {
+    transition: background-color 0.4s ease, color 0.4s ease,
+                border-color 0.4s ease, box-shadow 0.4s ease,
+                text-shadow 0.4s ease;
+  }
+
+  /* ============================================
+     МЕНЮ
+     ============================================ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--bg-nav);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 3px solid var(--border-color);
+    backdrop-filter: blur(10px);
+  }
+
+  nav .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--accent);
+    text-shadow: var(--logo-shadow);
+    letter-spacing: 2px;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+  }
+
+  nav a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 14px;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  /* ============================================
+     ПЕРЕКЛЮЧАТЕЛЬ ТЕМ
+     ============================================ */
+  .theme-switcher {
+    position: relative;
+  }
+
+  .theme-btn {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+  }
+
+  .theme-btn:hover {
+    background: var(--accent);
+    transform: scale(1.08);
+  }
+
+  .theme-btn:active {
+    transform: scale(0.95);
+  }
+
+  .theme-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 6px;
+    min-width: 170px;
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: 0 10px 30px var(--shadow-card);
+    z-index: 100;
+    animation: menuIn 0.2s ease;
+  }
+
+  @keyframes menuIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .theme-menu.open {
+    display: flex;
+  }
+
+  .theme-menu button {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 10px 12px;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .theme-menu button .em {
+    font-size: 16px;
+  }
+
+  .theme-menu button:hover {
+    background: var(--accent);
+    color: var(--btn-text);
+  }
+
+  .theme-menu button.active {
+    background: var(--accent);
+    color: var(--btn-text);
+    font-weight: bold;
+  }
+
+  .theme-menu button.active::after {
+    content: '✓';
+    margin-left: auto;
+    font-weight: bold;
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background:
+      linear-gradient(var(--hero-overlay-a), var(--hero-overlay-b)),
+      linear-gradient(45deg, var(--hero-c1) 25%, var(--hero-c2) 25%,
+        var(--hero-c2) 50%, var(--hero-c1) 50%,
+        var(--hero-c1) 75%, var(--hero-c2) 75%);
+    background-size: 100% 100%, 60px 60px;
+    padding: 20px;
+    position: relative;
+    transition: background 0.4s ease;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 8vw, 90px);
+    color: var(--hero-text);
+    text-shadow: var(--hero-text-shadow);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero p {
+    font-size: clamp(14px, 2vw, 20px);
+    max-width: 700px;
+    color: var(--hero-subtext);
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    padding: 15px 40px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 3px solid var(--btn-border);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background-color 0.2s;
+    box-shadow: 5px 5px 0 var(--btn-shadow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+  }
+
+  .btn:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--btn-shadow);
+    background: var(--btn-bg-hover);
+  }
+
+  /* ============================================
+     СЕКЦИИ
+     ============================================ */
+  .section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section h2 {
+    font-size: clamp(28px, 5vw, 48px);
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 60px;
+    text-shadow: var(--heading-shadow);
+    letter-spacing: 3px;
+  }
+
+  /* ============================================
+     ТАЙМЛАЙН
+     ============================================ */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent-dark);
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px var(--accent);
+  }
+
+  .event {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .event.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .event:nth-child(odd) {
+    left: 0;
+    text-align: right;
+  }
+
+  .event:nth-child(even) {
+    left: 50%;
+    text-align: left;
+  }
+
+  .event::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    width: 24px;
+    height: 24px;
+    background: var(--accent);
+    border: 4px solid var(--bg-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--accent);
+  }
+
+  .event:nth-child(odd)::after {
+    right: -14px;
+  }
+
+  .event:nth-child(even)::after {
+    left: -14px;
+  }
+
+  .event-content {
+    background: var(--bg-secondary);
+    padding: 25px;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    box-shadow: 5px 5px 20px var(--shadow-card);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .event-content:hover {
+    transform: scale(1.03);
+    border-left-color: var(--accent-light);
+  }
+
+  .event-date {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .event-title {
+    color: var(--text-heading);
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .event-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     КАРТОЧКИ
+     ============================================ */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+  }
+
+  .card {
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+    border: 3px solid var(--border-color);
+    padding: 30px 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--shadow-glow) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px var(--shadow-glow);
+  }
+
+  .card-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .card h3 {
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+
+  .card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     ФАКТЫ
+     ============================================ */
+  .facts {
+    background: var(--bg-tertiary);
+    padding: 80px 20px;
+    margin-top: 40px;
+  }
+
+  .facts-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+  }
+
+  .fact {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--bg-primary);
+    border-radius: 10px;
+    border-top: 4px solid var(--accent);
+    transition: transform 0.3s;
+  }
+
+  .fact:hover {
+    transform: scale(1.05);
+  }
+
+  .fact-number {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: bold;
+    color: var(--accent);
+    text-shadow: var(--heading-shadow);
+    margin-bottom: 10px;
+  }
+
+  .fact-label {
+    color: var(--text-secondary);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  footer {
+    background: var(--bg-footer);
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 3px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  footer .heart {
+    color: #e74c3c;
+  }
+
+  /* ============================================
+     МОБИЛЬНАЯ ВЕРСИЯ
+     ============================================ */
+  @media (max-width: 768px) {
+    nav { padding: 12px 15px; }
+    nav .logo { font-size: 15px; letter-spacing: 1px; }
+    .nav-right { gap: 12px; }
+    nav ul { gap: 12px; }
+    nav a { font-size: 11px; }
+    .theme-btn { width: 36px; height: 36px; font-size: 17px; }
+
+    .timeline::before { left: 20px; }
+
+    .event {
+      width: 100%;
+      left: 0 !important;
+      text-align: left !important;
+      padding-left: 55px;
+      padding-right: 0;
+    }
+
+    .event::after {
+      left: 8px !important;
+      right: auto !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">⛏ MINECRAFT</div>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#history">История</a></li>
+      <li><a href="#versions">Версии</a></li>
+      <li><a href="#facts">Факты</a></li>
+    </ul>
+
+    <!-- Переключатель тем -->
+    <div class="theme-switcher">
+      <button class="theme-btn" aria-label="Сменить тему">
+        <span class="theme-icon">🌿</span>
+      </button>
+      <div class="theme-menu">
+        <button data-set-theme="overworld"><span class="em">🌿</span> Overworld</button>
+        <button data-set-theme="nether"><span class="em">🔥</span> Nether</button>
+        <button data-set-theme="end"><span class="em">🌌</span> The End</button>
+        <button data-set-theme="day"><span class="em">☀️</span> Day</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>MINECRAFT</h1>
+  <p>История самой продаваемой игры в мире — от простого эксперимента до глобального феномена, объединившего миллионы игроков.</p>
+  <a href="#history" class="btn">Начать путешествие</a>
+</section>
+
+<!-- ИСТОРИЯ -->
+<section class="section" id="history">
+  <h2>ХРОНОЛОГИЯ</h2>
+  <div class="timeline">
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2009</span>
+        <h3 class="event-title">Рождение идеи</h3>
+        <p class="event-desc">Маркус Персон (Notch) выпускает первую версию Cave Game — прототип будущего Minecraft. Игра создана за выходные на основе Infiniminer.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2010</span>
+        <h3 class="event-title">Alpha и Survival</h3>
+        <p class="event-desc">Появляются режимы выживания, монстры, крафт и здоровье. Игра набирает популярность среди инди-геймеров.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2011</span>
+        <h3 class="event-title">Официальный релиз</h3>
+        <p class="event-desc">18 ноября на MineCon 2011 выходит Minecraft 1.0. Добавлены Край, Дракон Края и зачарования. Notch становится легендой.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2014</span>
+        <h3 class="event-title">Microsoft покупает Mojang</h3>
+        <p class="event-desc">Microsoft приобретает Mojang за 2,5 миллиарда долларов. Notch покидает компанию, а игра получает новых издателей.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2016–2019</span>
+        <h3 class="event-title">Эпоха обновлений</h3>
+        <p class="event-desc">Выходят крупные апдейты: Combat Update, Update Aquatic, Village & Pillage. Игра обретает современные механики.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2020</span>
+        <h3 class="event-title">Nether Update</h3>
+        <p class="event-desc">Полная переработка Нижнего мира: новые биомы, мобы (пиглины, хоглины) и материалы. Пандемия вызывает взрывной рост игроков.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2021–2023</span>
+        <h3 class="event-title">Caves & Cliffs и Trails & Tales</h3>
+        <p class="event-desc">Грандиозное обновление пещер и гор. Добавлены медные блоки, аксолотли, глубокий тёмный биом и археология.</p>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="event-content">
+        <span class="event-date">2024–2025</span>
+        <h3 class="event-title">Новая эра</h3>
+        <p class="event-desc">Обновления Tricky Trials и новые эксперименты. Minecraft продолжает развиваться — уже более 15 лет на вершине!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ВЕРСИИ -->
+<section class="section" id="versions">
+  <h2>КЛЮЧЕВЫЕ ВЕРСИИ</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🌱</span>
+      <h3>Classic</h3>
+      <p>2009. Первый прототип — мир из блоков, творческий режим, основа всего.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⚔️</span>
+      <h3>Alpha</h3>
+      <p>2010. Появились монстры, выживание, крафт и первая механика здоровья.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🐉</span>
+      <h3>1.0</h3>
+      <p>2011. Официальный релиз. Край, Дракон и зачарования — игра стала полноценной.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌊</span>
+      <h3>1.13</h3>
+      <p>2018. Update Aquatic — океаны, дельфины, кораблекрушения и трезубцы.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔥</span>
+      <h3>1.16</h3>
+      <p>2020. Nether Update — новые биомы, пиглины и незеритовая экипировка.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⛰️</span>
+      <h3>1.18</h3>
+      <p>2021. Caves & Cliffs — гигантские пещеры и реалистичные горы.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ФАКТЫ -->
+<section class="facts" id="facts">
+  <div class="facts-grid">
+    <div class="fact">
+      <div class="fact-number" data-target="300">0</div>
+      <div class="fact-label">Млн копий продано</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number" data-target="15">0</div>
+      <div class="fact-label">Лет истории</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number" data-target="140">0</div>
+      <div class="fact-label">Млн активных игроков</div>
+    </div>
+    <div class="fact">
+      <div class="fact-number" data-target="1">0</div>
+      <div class="fact-label">Самая продаваемая игра</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>⛏ Сделано с <span class="heart">♥</span> для фанатов Minecraft</p>
+  <p style="margin-top: 10px;">© 2025 — История блочной вселенной</p>
+</footer>
+
+<script>
+  /* ============================================
+     ПЕРЕКЛЮЧЕНИЕ ТЕМ
+     ============================================ */
+  const themeBtn = document.querySelector('.theme-btn');
+  const themeMenu = document.querySelector('.theme-menu');
+  const themeIcon = document.querySelector('.theme-icon');
+  const themeButtons = document.querySelectorAll('[data-set-theme]');
+
+  const THEME_ICONS = {
+    overworld: '🌿',
+    nether:    '🔥',
+    end:       '🌌',
+    day:       '☀️'
+  };
+
+  function applyTheme(theme) {
+    if (theme === 'overworld') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+    themeIcon.textContent = THEME_ICONS[theme] || '🌿';
+
+    // Подсветка активного пункта в меню
+    themeButtons.forEach(b => {
+      b.classList.toggle('active', b.dataset.setTheme === theme);
+    });
+
+    try { localStorage.setItem('mc-theme', theme); } catch (e) {}
+  }
+
+  // Открытие/закрытие меню
+  themeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu.classList.toggle('open');
+  });
+
+  // Выбор темы
+  themeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyTheme(btn.dataset.setTheme);
+      themeMenu.classList.remove('open');
+    });
+  });
+
+  // Закрытие при клике вне меню
+  document.addEventListener('click', () => themeMenu.classList.remove('open'));
+
+  // Закрытие по Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') themeMenu.classList.remove('open');
+  });
+
+  // Загрузка сохранённой темы
+  let savedTheme = 'overworld';
+  try { savedTheme = localStorage.getItem('mc-theme') || 'overworld'; } catch (e) {}
+  applyTheme(savedTheme);
+
+  /* ============================================
+     АНИМАЦИЯ ПОЯВЛЕНИЯ ТАЙМЛАЙНА
+     ============================================ */
+  const events = document.querySelectorAll('.event');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.2 });
+
+  events.forEach(event => observer.observe(event));
+
+  /* ============================================
+     СЧЁТЧИКИ ФАКТОВ
+     ============================================ */
+  const counters = document.querySelectorAll('.fact-number');
+  let counted = false;
+
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !counted) {
+        counted = true;
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const duration = 2000;
+          const step = target / (duration / 16);
+          let current = 0;
+
+          const update = () => {
+            current += step;
+            if (current < target) {
+              counter.textContent = Math.ceil(current);
+              requestAnimationFrame(update);
+            } else {
+              counter.textContent = target;
+            }
+          };
+          update();
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  if (counters.length) countObserver.observe(counters[0]);
+
+  /* ============================================
+     ПЛАВНАЯ ПРОКРУТКА
+     ============================================ */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  /* ============================================
+     ПАРАЛЛАКС HERO
+     ============================================ */
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      hero.style.backgroundPositionY = window.pageYOffset * 0.5 + 'px, 0';
+    }
+  });
+</script>
+
+</body>
+</html>
